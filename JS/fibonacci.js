@@ -1,4 +1,4 @@
-//斐波纳契数列求和的JS饭缸及优化
+//斐波纳契数列求和的JS方法及优化
 
 var fibonacci = function(n) {
     if (n ==0 || n ==1) {
