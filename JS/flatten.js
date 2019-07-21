@@ -24,3 +24,9 @@ var flatten = arr => {
 };
 
 console.log(flatten(testArr));
+
+//运动ES6数组中的flat方法
+console.log(testArr.flat());//[1,2,3,4,[5],6]
+//默认只展开一层，指定参数为Infinity，可以展开任意深度的嵌套数组
+console.log(testArr.flat(Infinity));//[1,2,3,4,5,6];
+
