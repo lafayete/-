@@ -1,28 +1,30 @@
-## 用js实现bind方法
+## apply,call与bind
+apply, call以及bind都是用于改变函数的执行上下文。
+bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用。
+apply、call 二者而言，作用完全一样，只是接受参数的方式不太一样，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里
+* 实现call
 
-* bind是Function原型上的方法
+* 实现apply
+
+* 实现一个自己的bind
 
 ```js
-Function.prototype.bindFn = function (){
-    let self = this;//保存自身的this
-    let firstArg = [].shift.call(arguments);//取到参数的第一个，修改了原arguments，删除了第一项；
-    let restArg = [].slice.call(arguments);//将修改后的arguments转化为数组
-    function bound(){
-        let copyArg = [].slice.call(arguments);//注意这个arguments和上一个arguments不一样
-        return self.apply(firstArg,restArg.concat(copyArg));//
+Function.prototype.my_bind = function(context,...args) {
+    var self = this;
+    return function() {
+        self.apply(context, ...args);
     }
-    return bound;
-}
+};
 //测试用例
-
+let var = "Jim"
 let obj = {
-    name:'li'
+    name:'Shibao'
 }
-function sayName(a,b){
+function sayName(){
+    console.log(this);
     console.log(this.name);
-    console.log([a,b]);
 }
-let b = sayName.bindFn(obj,1);
-b(2)//li [1,2]
-
+sayName();// window, Jim
+let bindSayName = sayName.my_bind(obj);
+bindSayName();//obj, Shibao
 ```
