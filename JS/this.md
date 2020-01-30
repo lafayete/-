@@ -68,7 +68,8 @@ var person1 = {
 person1.friend.sayHi()
 ```
 
-打印结果： Hello, James
+打印结果： Hello, James。
+
 即无论有多少层对象，我们只关注最后一层，即此处的 friend 但是隐式绑定存在丢失的情况：
 
 ```js
@@ -84,7 +85,9 @@ var Hi = person.sayHi;
 Hi();
 ```
 
-此时输出：Hello, Jim。除了上述这种丢失之外，隐式丢失还会发生在回调函数中，来看一个例子
+此时输出：Hello, Jim。
+
+除了上述这种丢失之外，隐式丢失还会发生在回调函数中，来看一个例子
 
 ```js
 function sayHi() {
@@ -103,4 +106,5 @@ person1.sayHi();
 ```
 
 此时，并为输出 Hello, Wushibao 而是输出 Hello,Jim。表明在回调函数中 this 也存在隐式丢失的情况
+
 所以在判断 this 指向时要注意隐式丢失的情况
