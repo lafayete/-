@@ -108,3 +108,66 @@ person1.sayHi();
 此时，并为输出 Hello, Wushibao 而是输出 Hello,Jim。表明在回调函数中 this 也存在隐式丢失的情况
 
 所以在判断 this 指向时要注意隐式丢失的情况
+
+- 默认绑定
+
+在不应用以上两种规则的情况下，采用默认绑定。
+
+```js
+function sayHi() {
+  console.log("Hello,", this.name);
+}
+var name = "Wushibao";
+sayHi();
+```
+
+在调用 sayHi()函数时，此时 this 默认指向全局对象（非严格模式下），严格模式下，this 指向 undefined，undefined 上没有 this 对象，会报错。
+
+在浏览器环境下，输出的结果就是 Hello,Wushibao
+
+- new 绑定
+
+在阐述 new 绑定之前，来先看一下 new 操作符做了什么事情。
+
+1.创建一个新的对象
+
+2.将 this 指向这个新对象
+
+3.执行构造函数的代码
+
+4.将对象的 proto 属性设置为构造函数的原型对象
+
+5.返回新对象
+
+所以，在使用 new 调用函数的时候，会将新对象绑定到这个函数的 this 上。
+
+```js
+function sayHi(name) {
+  this.name = name;
+}
+var Hi = new sayHi("Wushibao");
+console.log("Hello,", Hi.name);
+```
+
+此时，输出 Hello: Wushibao
+
+- 绑定优先级
+
+new 绑定 > 显式绑定 > 隐式绑定 > 默认绑定
+
+- 箭头函数的 this
+
+箭头函数是 ES6 中新增特性，与普通函数不同的是，箭头函数没有自己的 this，它继承自外层的 this。来看一个例子
+
+```js
+var obj = {
+  say: () => {
+    console.log(this);
+  }
+};
+obj.say();
+```
+
+此时，在浏览器的环境下输出 window。因为正如之前所说的，箭头函数 this 继承自外层的 this。
+
+关于 this，暂且先写到这里。
