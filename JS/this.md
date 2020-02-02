@@ -70,7 +70,9 @@ person1.friend.sayHi()
 
 打印结果： Hello, James。
 
-即无论有多少层对象，我们只关注最后一层，即此处的 friend 但是隐式绑定存在丢失的情况：
+即无论有多少层对象，我们只关注最后一层，即此处的 friend。
+
+但是隐式绑定有一个问题，会存在丢失的情况，如下：
 
 ```js
 function sayHi() {
