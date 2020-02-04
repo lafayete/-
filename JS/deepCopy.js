@@ -1,23 +1,23 @@
 //实现深拷贝
 //方法一：常规实现
 var testObj = {
-    a: {
-        b: 1
-    }
+  a: {
+    b: 1
+  }
 };
 var deepCopy = function(obj) {
-    var newObj = Array.isArray(obj) ? []: {};
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            if (typeof obj[key] == "object") {
-                newObj[key] = deepCopy(obj[key]);
-            } else {
-                newObj[key] = obj[key];
-            }
-        }
+  var newObj = Array.isArray(obj) ? [] : {};
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (typeof obj[key] == "object") {
+        newObj[key] = deepCopy(obj[key]);
+      } else {
+        newObj[key] = obj[key];
+      }
     }
-    return newObj;
-}
+  }
+  return newObj;
+};
 
 var copyTestObj = deepCopy(testObj);
 testObj.a.b = 2;
@@ -25,10 +25,10 @@ console.log(copyTestObj); //{ a: { b: 1 } }
 
 //方法二：利用JSON方法实现
 var deepCopy2 = function(obj) {
-    var _obj = JSON.stringify(obj);
-    var objClone = JSON.parse(_obj);
-    return objClone;
-}
+  var _obj = JSON.stringify(obj);
+  var objClone = JSON.parse(_obj);
+  return objClone;
+};
 var copyTestObj2 = deepCopy(testObj);
 testObj.a.b = 3;
 console.log(copyTestObj2); //{ a: { b: 2 } }

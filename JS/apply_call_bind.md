@@ -11,7 +11,7 @@ Function.prototype.my_call = function(context, ...args) {
   var context = context || window;
   context.fn = this;
   var result = context.fn(...args);
-  delete contex.fn;
+  delete context.fn;
   return result;
 };
 var name = "Jim";
@@ -29,7 +29,7 @@ sayName.my_call(obj); //obj, Shibao
 - 实现 apply
 
 ```js
-Function.prototype.my_call = function(context, args) {
+Function.prototype.my_apply = function(context, ...args) {
   var context = context || window;
   context.fn = this;
   var argsArr = args;
@@ -39,7 +39,7 @@ Function.prototype.my_call = function(context, args) {
   } else {
     result = context.fn(...args);
   }
-  delete contex.fn;
+  delete context.fn;
   return result;
 };
 var name = "Jim";
@@ -51,7 +51,7 @@ function sayName() {
   console.log(this.name);
 }
 sayName(); // window, Jim
-sayName.apply(obj); //obj, Shibao
+sayName.my_apply(obj); //obj, Shibao
 ```
 
 - 实现一个自己的 bind
@@ -60,7 +60,7 @@ sayName.apply(obj); //obj, Shibao
 Function.prototype.my_bind = function(context, ...args) {
   var self = this;
   return function() {
-    self.apply(context, ...args);
+    self.apply(context, args);
   };
 };
 //测试用例
