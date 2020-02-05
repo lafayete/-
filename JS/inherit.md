@@ -97,7 +97,7 @@ function object(o) {
 }
 ```
 
-使用原型继承同样存在引用类型将被所有实例共享的问题。
+从本质上讲, object() 对传入其中的对象执行了一次浅复制. 下面我们来看看为什么是浅复制。
 
 ```js
 const person = {
@@ -126,3 +126,16 @@ function another(o) {
 新生成的对象不仅具有原对象的所有属性和方法，而且还具备自己的方法，相当于被增强了。
 
 - 寄生组合式继承
+
+前面说过，组合继承的问题在于开销太大，会调用两次父类的构造函数。而寄生组合的方式能有效改进这一点。其主要做法就是子类的原型指向父类副本的实例从而实现原型共享。
+
+```js
+const superClass = function() {};
+function inherit(subClass, superClass) {
+  var prototype = object(superClass.prototype); //创建对象
+  prototype.constructor = subClass; //增强对象
+  subClass.prototype = prototype; //指定对象
+}
+```
+
+以上就是 JS 实现继承的方式。
