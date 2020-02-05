@@ -84,3 +84,45 @@ son2.sayName(); // 'Tom'
 ```
 
 组合继承避免了原型链和借用构造函数的缺陷,融合了它们的优点,成为 JavaScript 中最常用的继承模式。唯一的缺点在于，调用了两次父类构造函数，造成了不必要的浪费。
+
+- 原型继承
+
+其主要思想是在 object 函数内部，先创建一个临时性的构造函数，然后将传入的对象作为这个构造函数的原型，最后返回这个临时对象的一个实例。
+
+```js
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+```
+
+使用原型继承同样存在引用类型将被所有实例共享的问题。
+
+```js
+const person = {
+  friends: ["Jim", "Tom"]
+};
+const another1 = object(person);
+another1.friends.push("James");
+const another2 = object(person);
+console.log(another2.friends);
+```
+
+- 寄生式继承
+
+寄生式继承的思路与(寄生)构造函数和工厂模式类似, 即创建一个仅用于封装继承过程的函数,该函数在内部以某种方式来增强对象,最后再像真的是它做了所有工作一样返回对象。
+
+```js
+function another(o) {
+  const clone = object(o);
+  clone.sayHi = function() {
+    alert("Hi");
+  };
+  return clone;
+}
+```
+
+新生成的对象不仅具有原对象的所有属性和方法，而且还具备自己的方法，相当于被增强了。
+
+- 寄生组合式继承
